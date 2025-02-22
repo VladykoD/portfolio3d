@@ -1,0 +1,149 @@
+@use "sass:math" as math;
+
+/* *
+ * Media
+ */
+
+@mixin max-1400() {
+  @media (max-width: 1400px) {
+    @content;
+  }
+}
+
+@mixin min-1400() {
+  @media (min-width: 1401px) {
+    @content;
+  }
+}
+
+@mixin max-1280() {
+  @media (max-width: 1280px) {
+    @content;
+  }
+}
+
+@mixin min-1280() {
+  @media (min-width: 1281px) {
+    @content;
+  }
+}
+
+@mixin max-960() {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+@mixin min-960() {
+  @media (min-width: 961px) {
+    @content;
+  }
+}
+
+@mixin max-640() {
+  @media (max-width: 640px) {
+    @content;
+  }
+}
+
+@mixin min-640() {
+  @media (min-width: 641px) {
+    @content;
+  }
+}
+
+@mixin max-375() {
+  @media (max-width: 375px) {
+    @content;
+  }
+}
+
+@mixin min-375() {
+  @media (min-width: 375px) {
+    @content;
+  }
+}
+
+@mixin mobileMini() {
+  @media (max-width: 361px) {
+    @content;
+  }
+}
+
+
+//font
+@mixin h1 {
+}
+
+@mixin h2 {
+}
+
+@mixin h3 {
+}
+
+@mixin small-text {
+  font-family: var(--font-text);
+  font-size: pxToRem(17);
+  line-height: 1.41;
+
+  @include max-960 {
+
+  }
+}
+
+@function pxToRem($size) {
+  @return math.div($size, 16) * 1rem;
+}
+
+@function column($columns, $gap: 1rem) {
+  @return calc(((100% + $gap) * $columns) - $gap);
+}
+
+/* *
+ * Interactions
+ */
+@mixin pointerFine {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @include pointerFine {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin focus {
+  &:focus-visible {
+    @content;
+  }
+}
+
+@mixin hoverAndFocus {
+  @include pointerFine {
+    &:hover,
+    &:focus {
+      @content;
+    }
+  }
+
+  &:focus-visible {
+    @content;
+  }
+}
+
+@mixin pseudo-min-tapable-area {
+  &:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -25px;
+    width: 50px;
+    height: 50px;
+    content: '';
+  }
+}
