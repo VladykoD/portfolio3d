@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { MainPage } from '@/components/MainPage/MainPage';
 
 export default function Home() {
   return (
@@ -36,7 +37,7 @@ export default function Home() {
         <link rel="canonical" href="" />
       </Head>
       <main>
-        <h1>Hello!</h1>
+        <MainPage />
       </main>
     </>
   );

@@ -1,0 +1,43 @@
+@import '@/styles/mixins';
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  color: inherit;
+  outline: none;
+  cursor: pointer;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-align: center;
+  font: 700 .75rem / 1 var(--font-text);
+  text-transform: uppercase;
+  transition: transform .3s ease-in-out;
+  overflow: hidden;
+  border: none;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 2rem;
+
+  @include hover {
+    transform: translate3d(5px, 5px,0);
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* *
+ * Disabled
+ */
+.btn[disabled],
+.btn.isDisabled {
+  opacity: 0.6;
+  transition: none;
+  pointer-events: none;
+  cursor: default;
+}
