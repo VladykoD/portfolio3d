@@ -1,0 +1,39 @@
+{
+  "name": "portfolio3d",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/three": "^0.163.0",
+    "clsx": "^2.1.0",
+    "next": "14.0.0",
+    "raw-loader": "^4.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.74.1",
+    "three": "^0.163.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-unicorn": "^45.0.2",
+    "prettier": "^2.8.3",
+    "typescript": "^5.4.0"
+  }
+}

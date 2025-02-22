@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "eslint:recommended"
+  ],
+  "rules": {
+    "function-paren-newline": "off",
+    "no-unsafe-optional-chaining": "off",
+    "no-return-assign": "off",
+    "no-confusing-arrow": "off",
+    "react/no-array-index-key": "off",
+    "react/no-danger": "off",
+    "prefer-destructuring": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ]
+  }
+}
