@@ -1,17 +1,43 @@
 @import '@/styles/mixins';
 
-.hero {
+.canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  zoom: 0.8;
+}
 
+
+.hero {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
 
 }
 
 
 .swiper {
   width: 100%;
-  height: 500px;
+  height: 100%;
   
-  &-slide {
-    height: 500px;
-    border: 2px solid magenta;
+  
+  .slide {
+    height: 100%;
+    width: 100%;
+    border: 6px solid magenta;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    
+    &__1 {
+      border-color: magenta;
+    }
+    &__2 {
+      border-color: red;
+    }
+    &__3 {
+      border-color: cyan;
+    }
   }
+  
 }

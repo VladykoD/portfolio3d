@@ -36,9 +36,8 @@ export default function Home() {
         <meta name="author" content="" />
         <link rel="canonical" href="" />
       </Head>
-      <main>
-        <MainPage />
-      </main>
+
+      <MainPage />
     </>
   );
 }
