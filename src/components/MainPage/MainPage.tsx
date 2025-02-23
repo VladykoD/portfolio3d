@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import { useEffect, useRef, useState } from 'react';
-import { CanvasHandler } from '@/components/MainPage/CanvasHandler';
+import { CanvasHandler } from '@/components/Canvas/CanvasHandler';
 
 export const MainPage = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
