@@ -13,6 +13,7 @@ import { Car } from '@/components/Canvas/Car';
 import { RoadPlane } from '@/components/Canvas/Road';
 import { Tunnel } from '@/components/Canvas/Tunnel';
 import { NightSky } from '@/components/Canvas/NightSky';
+import { TerrainPlane } from '@/components/Canvas/Mountains';
 
 export class CanvasHandler {
   private readonly renderer: WebGLRenderer;
@@ -35,6 +36,7 @@ export class CanvasHandler {
   private roadPlane: RoadPlane | null = null;
   private tunnel: Tunnel | null = null;
   private nightSky: NightSky | null = null;
+  private terrainPlane: TerrainPlane | null = null;
 
   public constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = new WebGLRenderer({
@@ -60,7 +62,7 @@ export class CanvasHandler {
     this.scene.add(ambientLight);
 
     const mainLight = new DirectionalLight(0xffffff, 1);
-    mainLight.position.set(5, 5, 5);
+    mainLight.position.set(2, 2, 5);
     this.scene.add(mainLight);
 
     this.createShapes();
@@ -80,6 +82,12 @@ export class CanvasHandler {
     this.resizeObserver.disconnect();
 
     this.controls.dispose();
+
+    this.car?.dispose();
+    this.roadPlane?.dispose();
+    this.tunnel?.dispose();
+    this.nightSky?.dispose();
+    this.terrainPlane?.dispose();
   }
 
   public createShapes() {
@@ -88,19 +96,22 @@ export class CanvasHandler {
     this.tunnel = new Tunnel();
     this.nightSky = new NightSky();
 
-    this.scene.add(this.car.getMesh());
-
     const roadMesh = this.roadPlane.getMesh();
     if (roadMesh) this.scene.add(roadMesh);
 
-    this.scene.add(this.tunnel.getMesh());
-    this.scene.add(this.nightSky.getGroup());
+    this.terrainPlane = new TerrainPlane();
+
+    this.scene.add(
+      this.car.getMesh(),
+      this.tunnel.getMesh(),
+      this.nightSky.getGroup(),
+      this.terrainPlane.getGroup(),
+    );
   }
 
   public updateSlide(slideIndex: number) {
     this.activeSlide = slideIndex;
     console.log('Current slide:', this.activeSlide);
-    // You can add more logic here to handle slide changes
   }
 
   // eslint-disable-next-line complexity

@@ -1,13 +1,16 @@
 import {
   BufferGeometry,
+  Color,
   Float32BufferAttribute,
   FrontSide,
   Group,
   Mesh,
   MeshBasicMaterial,
+  MeshLambertMaterial,
   PlaneGeometry,
   Points,
   PointsMaterial,
+  SphereGeometry,
   Vector3,
 } from 'three';
 
@@ -50,8 +53,25 @@ export class NightSky {
 
     const starsPoints = new Points(starsGeometry, starsMaterial);
 
+    const geometrySun = new SphereGeometry(
+      4, // radius
+      32, // widthSegments
+      32, // heightSegments
+    );
+
+    // Создаем материал
+    const materialSun = new MeshLambertMaterial({
+      color: new Color('#ff00ff'), // hot pink
+      emissive: new Color('#ff00ff'),
+      emissiveIntensity: 0.3,
+    });
+
+    const sun = new Mesh(geometrySun, materialSun);
+    sun.position.set(0, 11, 0);
+
     this.group.add(sky);
     this.group.add(starsPoints);
+    this.group.add(sun);
     this.group.position.set(0, 0, -80);
   }
 
