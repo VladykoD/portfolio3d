@@ -53,9 +53,26 @@ export const MainPage = () => {
         onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
         //onSwiper={(swiper) => console.log(swiper)}
       >
-        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>Slide 1</SwiperSlide>
-        <SwiperSlide className={clsx(styles.slide, styles.slide__2)}>Slide 2</SwiperSlide>
-        <SwiperSlide className={clsx(styles.slide, styles.slide__3)}>Slide 3</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>
+          <div>
+            <h1>
+              Дарья Владыко,
+              <br /> Креативный фронтенд
+            </h1>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>
+          <div>
+            <p>
+              10 лет в разработке. Мои проекты получили награды Red Dot, Awwwards, Tagline,
+              Orpetron, Золотой сайт, Рейтинг рунета.
+            </p>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>кейс 1</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>кейс 2</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>кейс 3</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>выход</SwiperSlide>
       </Swiper>
     </main>
   );

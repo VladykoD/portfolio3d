@@ -1,13 +1,5 @@
-import {
-  FrontSide,
-  Material,
-  Mesh,
-  MeshLambertMaterial,
-  PlaneGeometry,
-  RepeatWrapping,
-  Texture,
-  TextureLoader,
-} from 'three';
+import { FrontSide, Material, Mesh, MeshLambertMaterial, PlaneGeometry, Texture } from 'three';
+import { TextureLoad } from '@/components/Canvas/TextureLoad';
 
 export class RoadPlane {
   private mesh: Mesh | null = null;
@@ -18,19 +10,10 @@ export class RoadPlane {
   }
 
   private createPlane() {
-    const textureLoader = new TextureLoader();
-
-    // Оптимизированная загрузка текстуры
-    this.texture = textureLoader.load('/img/grid.png', (texture) => {
-      texture.wrapS = RepeatWrapping;
-      texture.wrapT = RepeatWrapping;
-      texture.repeat.set(12, 72);
-      texture.anisotropy = 16; // Улучшаем качество при наклонном просмотре
-      texture.generateMipmaps = true;
-    });
+    this.texture = TextureLoad.loadTexture('/img/grid.png', 12, 72);
 
     // Используем BufferGeometry
-    const planeGeometry = new PlaneGeometry(12, 80, 1, 1);
+    const planeGeometry = new PlaneGeometry(20, 80, 1, 1);
     const planeMaterial = new MeshLambertMaterial({
       map: this.texture,
       side: FrontSide,
@@ -38,7 +21,7 @@ export class RoadPlane {
 
     this.mesh = new Mesh(planeGeometry, planeMaterial);
     this.mesh.rotation.x = -Math.PI / 2;
-    this.mesh.position.set(0, -2, -40);
+    this.mesh.position.set(0, -2, 36);
 
     // Оптимизация для статических объектов
     this.mesh.matrixAutoUpdate = false;

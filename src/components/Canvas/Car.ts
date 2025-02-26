@@ -7,11 +7,11 @@ export class Car {
     const geometry = new BoxGeometry(0.5, 0.5, 0.5);
     const material = new MeshLambertMaterial({ color: 0x00ff00, wireframe: true });
     this.mesh = new Mesh(geometry, material);
-    this.mesh.position.set(0, -1, -1);
+    this.mesh.position.set(0, -1, 76);
   }
 
-  public getMesh(): Mesh {
-    return this.mesh!;
+  public getMesh(): Mesh | null {
+    return this.mesh;
   }
 
   public dispose() {

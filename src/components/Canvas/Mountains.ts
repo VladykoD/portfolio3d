@@ -5,44 +5,30 @@ import {
   Group,
   Mesh,
   MeshLambertMaterial,
-  Path,
   PlaneGeometry,
-  RepeatWrapping,
-  Shape,
-  ShapeGeometry,
-  Texture,
-  TextureLoader,
   Vector2,
 } from 'three';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
+import { TextureLoad } from '@/components/Canvas/TextureLoad';
 
 export class TerrainPlane {
   private group: Group | null = null;
 
   constructor() {
-    // Создаем группу для объединения всех элементов
     this.group = new Group();
 
-    // Создаем первую гору
     const mountain1 = this.createMountain(4, 23, 6, 20);
     mountain1.rotateX(-Math.PI / 2);
-    mountain1.position.set(-3.5, -2.05, -12.08);
-    this.group.add(mountain1);
+    mountain1.position.set(-3.5, -2.05, 66.08);
 
-    // Создаем вторую гору с другими параметрами
     const mountain2 = this.createMountain(4, 23, 6, 20);
     mountain2.rotateX(-Math.PI / 2);
-    mountain2.position.set(3.5, -2.05, -12.08);
-    this.group.add(mountain2);
+    mountain2.position.set(3.5, -2.05, 64.08);
 
-    // Создаем плоскость с дыркой
-    const planeWithHole = this.createPlaneWithHole();
-
-    planeWithHole.position.set(0, -1, -20);
-    this.group.add(planeWithHole);
+    this.group.add(mountain1, mountain2);
   }
 
-  // Метод для создания горы с заданными параметрами
+  // создание горы с заданными параметрами
   private createMountain(
     width: number,
     height: number,
@@ -51,13 +37,14 @@ export class TerrainPlane {
   ): Mesh {
     const geometry = new PlaneGeometry(width, height, widthSegments, heightSegments);
 
-    const mountainTexture = this.loadTexture('/img/grid.png', 8, 20.85);
-    const material1 = new MeshLambertMaterial({
+    const mountainTexture = TextureLoad.loadTexture('/img/grid.png', 8, 20);
+
+    const material = new MeshLambertMaterial({
       map: mountainTexture,
       side: FrontSide,
     });
 
-    const mountain = new Mesh(geometry, material1);
+    const mountain = new Mesh(geometry, material);
     this.setNoise(mountain.geometry, new Vector2(1, 1), 1);
 
     return mountain;
@@ -117,60 +104,12 @@ export class TerrainPlane {
     g.computeVertexNormals();
   }
 
-  public createPlaneWithHole(): Mesh {
-    // Размеры плоскости
-    const width = 12;
-    const height = 5;
-    const holeRadius = 1.8;
-
-    // Создаем внешний контур (плоскость)
-    const shape = new Shape();
-    shape.moveTo(-width / 2, -height / 2);
-    shape.lineTo(width / 2, -height / 2);
-    shape.lineTo(width / 4, height / 2);
-    shape.lineTo(-width / 4, height / 2);
-    shape.closePath();
-
-    // Создаем внутренний контур (дырку)
-    const holePath = new Path();
-    holePath.absarc(0, 0, holeRadius, 0, Math.PI * 2, true);
-    shape.holes.push(holePath);
-
-    // Создаем геометрию из формы
-    const geometry = new ShapeGeometry(shape);
-
-    // Создаем материал с текстурой
-    const material1 = new MeshLambertMaterial({
-      color: 0x00ff00,
-      side: FrontSide,
-    });
-
-    const wall = new Mesh(geometry, material1);
-
-    return wall;
-  }
-
-  // Возвращаем группу вместо меша
-  public getGroup(): Group {
-    return this.group!;
-  }
-
-  private loadTexture(path: string, repeatX: number = 1, repeatY: number = 1): Texture {
-    const textureLoader = new TextureLoader();
-    const texture = textureLoader.load(path, (loadedTexture) => {
-      loadedTexture.wrapS = RepeatWrapping;
-      loadedTexture.wrapT = RepeatWrapping;
-      loadedTexture.repeat.set(repeatX, repeatY);
-      loadedTexture.anisotropy = 16;
-      loadedTexture.generateMipmaps = true;
-    });
-
-    return texture;
+  public getGroup(): Group | null {
+    return this.group;
   }
 
   public dispose() {
     if (this.group) {
-      // Перебираем все дочерние элементы группы
       this.group.children.forEach((child) => {
         if (child instanceof Mesh) {
           child.geometry.dispose();
@@ -183,7 +122,7 @@ export class TerrainPlane {
         }
       });
 
-      this.group.clear(); // Удаляем все дочерние элементы
+      this.group.clear();
       this.group = null;
     }
   }
