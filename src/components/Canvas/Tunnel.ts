@@ -14,6 +14,15 @@ import {
 } from 'three';
 import { TextureLoad } from '@/components/Canvas/TextureLoad';
 
+const pointsTunnel = [
+  new Vector3(-4, 0, 42),
+  new Vector3(-4, 0, 32),
+  new Vector3(0, 0, 24),
+  new Vector3(-4, 0, 16),
+  new Vector3(0, 0, 8),
+  new Vector3(0, 0, 5),
+];
+
 export class Tunnel {
   private mesh: InstancedMesh | null = null;
   private group: Group | null = null;
@@ -21,23 +30,18 @@ export class Tunnel {
   constructor() {
     this.group = new Group();
 
-    const points = [
-      new Vector3(-4, 0, 40),
-      new Vector3(-4, 0, 32),
-      new Vector3(0, 0, 24),
-      new Vector3(-4, 0, 16),
-      new Vector3(0, 0, 8),
-      new Vector3(0, 0, 5),
-    ];
-
-    const curve = new CatmullRomCurve3(points);
-    const tubeGeometry = new TubeGeometry(curve, 32, 2, 8, false);
-    const tubeTexture = TextureLoad.loadTexture('/img/grid.png', 20, 20);
+    const curve = new CatmullRomCurve3(pointsTunnel);
+    const tubeGeometry = new TubeGeometry(curve, 52, 2, 8, false);
+    const tubeTexture = TextureLoad.loadTexture('/img/line-h.png', 1, 20);
 
     const tubeMaterial = new MeshLambertMaterial({
-      color: 0x00ff00,
+      color: 0xde527f,
       side: DoubleSide,
       map: tubeTexture,
+      transparent: true, // Включаем прозрачность
+      opacity: 1,
+      emissive: 0xde527f, // цвет свечения
+      emissiveIntensity: 1,
     });
 
     this.mesh = new InstancedMesh(tubeGeometry, tubeMaterial, 1);
@@ -48,10 +52,10 @@ export class Tunnel {
     this.mesh.updateMatrix();
 
     // плоскость с дыркой
-    const planeWithHole = this.createPlaneWithHole();
+    // const planeWithHole = this.createPlaneWithHole();
 
-    planeWithHole.position.set(0, -1, 55);
-    this.group.add(planeWithHole, this.mesh);
+    //planeWithHole.position.set(0, -1, 55);
+    this.group.add(this.mesh);
   }
 
   public createPlaneWithHole(): Mesh {

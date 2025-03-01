@@ -10,8 +10,8 @@ export class Car {
     this.mesh.position.set(0, -1, 76);
   }
 
-  public getMesh(): Mesh | null {
-    return this.mesh;
+  public getMesh(): Mesh {
+    return this.mesh!;
   }
 
   public dispose() {

@@ -17,13 +17,13 @@ export class TerrainPlane {
   constructor() {
     this.group = new Group();
 
-    const mountain1 = this.createMountain(4, 23, 6, 20);
+    const mountain1 = this.createMountain(6, 23, 8, 20);
     mountain1.rotateX(-Math.PI / 2);
-    mountain1.position.set(-3.5, -2.05, 66.08);
+    mountain1.position.set(-4.56, -2.05, 64);
 
-    const mountain2 = this.createMountain(4, 23, 6, 20);
+    const mountain2 = this.createMountain(6, 23, 8, 20);
     mountain2.rotateX(-Math.PI / 2);
-    mountain2.position.set(3.5, -2.05, 64.08);
+    mountain2.position.set(4.56, -2.05, 64);
 
     this.group.add(mountain1, mountain2);
   }
@@ -42,10 +42,11 @@ export class TerrainPlane {
     const material = new MeshLambertMaterial({
       map: mountainTexture,
       side: FrontSide,
+      color: 0x566dca,
     });
 
     const mountain = new Mesh(geometry, material);
-    this.setNoise(mountain.geometry, new Vector2(1, 1), 1);
+    this.setNoise(mountain.geometry, new Vector2(1, 1), 1.5);
 
     return mountain;
   }
@@ -58,6 +59,9 @@ export class TerrainPlane {
 
     if (!(uv instanceof BufferAttribute)) return;
 
+    // Увеличиваем базовую амплитуду для большего разброса высот
+    const heightAmplitude = amplitude * 0.9; // Увеличиваем множитель
+
     for (let i = 0; i < pos.count; i++) {
       vec2.fromBufferAttribute(uv, i);
 
@@ -66,7 +70,7 @@ export class TerrainPlane {
       const normalizedY = vec2.y;
 
       // Создаем маску только для X (ширины), чтобы высота была одинаковой по Y
-      const edgeMaskX = 1 - Math.pow(Math.abs(normalizedX - 0.5) * 2, 2);
+      const edgeMaskX = 1 - Math.pow(Math.abs(normalizedX - 0.5) * 2, 1.5); // Уменьшаем степень для более резких склонов
 
       // Для Y используем почти постоянное значение с небольшим затуханием на краях
       const edgeMaskY =
@@ -75,25 +79,29 @@ export class TerrainPlane {
           : Math.min(normalizedY / 0.05, (1 - normalizedY) / 0.05);
 
       // Генерируем базовый шум
-      vec2.add(uvShift).multiplyScalar(amplitude * 5);
+      vec2.add(uvShift).multiplyScalar(heightAmplitude * 5);
 
       let noise = 0;
-      // Используем одинаковую частоту шума по Y
-      noise += perlin.noise(vec2.y * 0.5, vec2.x * 2, 0);
-      noise += perlin.noise(vec2.y * 1, vec2.x * 4, 0) * 0.5;
+      // Используем несколько слоев шума с разными частотами для создания более детализированного рельефа
+      noise += perlin.noise(vec2.y * 0.5, vec2.x * 2, 0) * 1.2; // Усиливаем базовый шум
+      noise += perlin.noise(vec2.y * 1, vec2.x * 4, 0) * 0.7; // Добавляем средние детали
+      noise += perlin.noise(vec2.y * 2, vec2.x * 8, 0) * 0.3; // Добавляем мелкие детали
 
       // Используем абсолютное значение шума
       noise = Math.abs(noise);
 
-      // Делаем горы более острыми
-      noise = Math.pow(noise, 0.3);
+      // Делаем горы более острыми, уменьшая степень для более выраженных пиков
+      noise = Math.pow(noise, 0.25);
 
       // Применяем маску краёв
-      const height = noise * amplitude * edgeMaskX * edgeMaskY;
+      const height = noise * heightAmplitude * edgeMaskX * edgeMaskY;
 
-      // Добавляем случайные пики, но только по ширине (X), не по длине (Y)
-      if (edgeMaskX > 0.7) {
-        const spike = Math.random() * 2 * amplitude * edgeMaskX * edgeMaskY;
+      // Добавляем более выраженные случайные пики
+      if (edgeMaskX > 0.4) {
+        // Расширяем область для пиков
+        // Создаем более выраженные и разнообразные пики
+        const spikeIntensity = Math.random() * Math.random(); // Квадратичное распределение для более редких высоких пиков
+        const spike = spikeIntensity * 3.0 * heightAmplitude * edgeMaskX * edgeMaskY;
         pos.setZ(i, height + spike);
       } else {
         pos.setZ(i, height);
@@ -104,8 +112,8 @@ export class TerrainPlane {
     g.computeVertexNormals();
   }
 
-  public getGroup(): Group | null {
-    return this.group;
+  public getGroup(): Group {
+    return this.group!;
   }
 
   public dispose() {

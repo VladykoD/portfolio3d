@@ -6,7 +6,7 @@ export class NightSky {
   constructor() {
     this.group = new Group();
 
-    const geometrySun = new SphereGeometry(4, 32, 32);
+    const geometrySun = new SphereGeometry(6, 32, 32);
 
     // Создаем материал
     const materialSun = new MeshLambertMaterial({
@@ -16,14 +16,14 @@ export class NightSky {
     });
 
     const sun = new Mesh(geometrySun, materialSun);
-    sun.position.set(0, 11, 30);
+    sun.position.set(-8, 20, 30);
 
     this.group.add(sun);
     this.group.position.set(0, 0, -50);
   }
 
-  public getGroup(): Group | null {
-    return this.group;
+  public getGroup(): Group {
+    return this.group!;
   }
 
   public dispose() {
