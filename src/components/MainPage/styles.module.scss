@@ -8,8 +8,8 @@
  // z-index: 3;
  // zoom: 0.8;
  // background: var(--purple);
-  background: url('/img/stars2.jpg') center center no-repeat;
-  background-size: cover;
+  background:  url('/img/stars3.svg') center center repeat;
+  background-size: 30vw;
 }
 
 
@@ -17,7 +17,15 @@
   position: fixed;
   inset: 0;
   z-index: 2;
-
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/img/bg.svg') center center repeat-x;
+    background-size: 20vw 100vh;
+    z-index: 1;
+  }
 }
 
 

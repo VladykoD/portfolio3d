@@ -11,6 +11,7 @@ import {
   Vector3,
 } from 'three';
 import { TextureLoad } from '@/components/Canvas/TextureLoad';
+import { PINK } from '@/assets/helpers/variables';
 
 const pointsTunnel = [
   new Vector3(-4, 0, 42),
@@ -33,12 +34,12 @@ export class Tunnel {
     const tubeTexture = TextureLoad.loadTexture('/img/line-h.png', 1, 20);
 
     const tubeMaterial = new MeshLambertMaterial({
-      color: 0xde527f,
+      color: PINK,
       side: BackSide,
       map: tubeTexture,
       transparent: true, // Включаем прозрачность
       opacity: 1,
-      emissive: 0xde527f, // цвет свечения
+      emissive: PINK, // цвет свечения
       emissiveIntensity: 1,
     });
 
@@ -61,9 +62,9 @@ export class Tunnel {
 
     // Создаем материал для кольца
     const ringMaterial = new MeshLambertMaterial({
-      color: 0xde527f,
+      color: PINK,
       side: FrontSide,
-      emissive: 0xde527f,
+      emissive: PINK,
       emissiveIntensity: 0.5,
     });
 

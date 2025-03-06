@@ -38,7 +38,7 @@ export class Car {
   };
 
   constructor() {
-    this.initGUI();
+    //this.initGUI();
 
     // Load car model
     this.loadModel('car', '/models/car.glb', {

@@ -10,6 +10,7 @@ import {
 } from 'three';
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
 import { TextureLoad } from '@/components/Canvas/TextureLoad';
+import { BLUE } from '@/assets/helpers/variables';
 
 export class TerrainPlane {
   private group: Group | null = null;
@@ -19,11 +20,11 @@ export class TerrainPlane {
 
     const mountain1 = this.createMountain(6, 22, 8, 20);
     mountain1.rotateX(-Math.PI / 2);
-    mountain1.position.set(-4.56, -2.05, 67.5);
+    mountain1.position.set(-4.61, -2.0, 67.9);
 
     const mountain2 = this.createMountain(6, 22, 8, 20);
     mountain2.rotateX(-Math.PI / 2);
-    mountain2.position.set(4.56, -2.05, 66.5);
+    mountain2.position.set(4.61, -2.0, 67.9);
 
     this.group.add(mountain1, mountain2);
   }
@@ -37,16 +38,16 @@ export class TerrainPlane {
   ): Mesh {
     const geometry = new PlaneGeometry(width, height, widthSegments, heightSegments);
 
-    const mountainTexture = TextureLoad.loadTexture('/img/grid.png', 8, 20);
+    const mountainTexture = TextureLoad.loadTexture('/img/line-v.png', 20, 1);
 
     const material = new MeshLambertMaterial({
       map: mountainTexture,
       side: FrontSide,
-      color: 0x566dca,
+      color: BLUE,
     });
 
     const mountain = new Mesh(geometry, material);
-    this.setNoise(mountain.geometry, new Vector2(1, 1), 1.5);
+    this.setNoise(mountain.geometry, new Vector2(1, 1), 1);
 
     return mountain;
   }

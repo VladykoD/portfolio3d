@@ -51,22 +51,20 @@ export class CanvasHandler {
     });
     this.scene = new Scene();
 
-    const color = 0x471f53; // белый цвет тумана
-    const near = 2; // расстояние, с которого начинается туман
+    const color = 0x471f53;
+    const near = 8; // расстояние, с которого начинается туман
     const far = 20; // расстояние, на котором туман достигает максимальной плотности
     this.scene.fog = new Fog(color, near, far);
 
     this.camera = new PerspectiveCamera(45, 1, 0.05, 150);
     this.camera.position.set(0, 0.5, 84);
-    // this.camera.position.set(0, 8, 84);
-    // this.camera.rotation.set(-0.5, 0, 0);
 
     //  освещение
     const ambientLight = new AmbientLight(0xffffff, 0.5);
     this.scene.add(ambientLight);
 
-    const mainLight = new DirectionalLight(0xffffff, 5);
-    mainLight.position.set(2, 2, 5);
+    const mainLight = new DirectionalLight(0xde527f, 15);
+    mainLight.position.set(-0.4, 3.3, 2);
     this.scene.add(mainLight);
 
     this.createShapes();

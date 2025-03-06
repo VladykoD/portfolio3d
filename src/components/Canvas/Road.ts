@@ -9,6 +9,7 @@ import {
   Texture,
 } from 'three';
 import { TextureLoad } from '@/components/Canvas/TextureLoad';
+import { BLUE, PINK } from '@/assets/helpers/variables';
 
 export class RoadPlane {
   private mesh: Mesh | null = null;
@@ -21,14 +22,14 @@ export class RoadPlane {
   }
 
   private createPlane() {
-    this.texture = TextureLoad.loadTexture('/img/grid.png', 42, 45);
+    this.texture = TextureLoad.loadTexture('/img/grid-large.png', 42, 45);
 
     // Используем BufferGeometry
     const planeGeometry = new PlaneGeometry(60, 80, 1, 1);
     const planeMaterial = new MeshLambertMaterial({
       map: this.texture,
       side: FrontSide,
-      color: 0x566dca,
+      color: BLUE,
     });
 
     this.mesh = new Mesh(planeGeometry, planeMaterial);
@@ -46,9 +47,9 @@ export class RoadPlane {
     const geometry = new BoxGeometry(0.02, 25, 0.02);
 
     const material = new MeshLambertMaterial({
-      color: 0xde527f,
+      color: PINK,
       side: FrontSide,
-      emissive: 0xde527f,
+      emissive: PINK,
       emissiveIntensity: 0.5,
     });
 

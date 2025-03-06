@@ -35,25 +35,25 @@ export const cameraRotation: HandleRotationType[] = [
 export const carPosition: HandlePositionType[] = [
   [-0.48, -1.56, 71.2, 0.5, 0, 'linear'], // 0
   [-0.55, -1.56, 56.8, 0.5, 0.2, 'elastic.in(1,0.75)'], // 1
-  [2.62, -1.56, 39.8, 0.5, 0, 'elastic.in(1.2,0.3)'], // 2
+  [2.94, -1.56, 38.8, 0.5, 0, 'elastic.in(1.2,0.3)'], // 2
   [0.84, -1.56, 31.9, 0.5, 0, 'easeOut'], // 3
   [2.94, -1.56, 22.8, 0.7, 0, 'easeIn'], // 4
   [2.94, -1.56, 9.7, 0.6, 0, 'easeIn'], // 5
 ];
 
 export const carRotation: HandleRotationType[] = [
-  [1.7, 0.5, 0, 'back.in(0.3)'], // 0
-  [1.41, 0.4, 0.2, 'back.out(0.7)'], // 1
-  [1.82, 0.2, 0.3, 'back.in(0.7)'], // 2
-  [0.74, 0.3, 0.4, 'easeIn'], // 3
-  [2.0, 0.5, 0.2, 'easeInOut'], // 4
-  [3.44, 0.6, 0, 'easeIn'], // 5
+  [1.7 - Math.PI / 2, 0.5, 0, 'back.in(0.3)'], // 0
+  [1.41 - Math.PI / 2, 0.4, 0.2, 'back.out(0.7)'], // 1
+  [1.82 - Math.PI / 2, 0.2, 0.3, 'back.in(0.7)'], // 2
+  [0.74 - Math.PI / 2, 0.3, 0.4, 'easeIn'], // 3
+  [2.0 - Math.PI / 2, 0.5, 0.2, 'easeInOut'], // 4
+  [3.44 - Math.PI / 2, 0.6, 0, 'easeIn'], // 5
 ];
 
 export const policePosition: HandlePositionType[] = [
   [0.58, -1.56, 74.6, 0.55, 0, 'linear'], // 0
-  [-0.55, -1.56, 60, 0.5, 0.2, 'elastic.in(1,0.3)'], // 1
-  [2.14, -1.56, 43.7, 0.5, 0, 'expoScale(0.5,7,power1.out)'], // 2
+  [-0.55, -1.56, 60, 0.5, 0.2, 'expoScale(0.5,7,power1.out)'], // 1
+  [2.14, -1.56, 43.9, 0.5, 0, 'expoScale(0.5,7,power1.out)'], // 2
   [2.4, -1.56, 35.9, 0.5, 0, 'linear)'], // 3
   [1.36, -1.56, 28, 0.6, 0, 'linear'], // 4
   [4.76, -1.56, 13.6, 0.5, 0.2, 'linear'], // 5
