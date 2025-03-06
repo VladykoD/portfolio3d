@@ -1,14 +1,12 @@
 import {
+  BackSide,
   CatmullRomCurve3,
-  DoubleSide,
   FrontSide,
   Group,
   InstancedMesh,
   Mesh,
   MeshLambertMaterial,
-  Path,
-  Shape,
-  ShapeGeometry,
+  RingGeometry,
   TubeGeometry,
   Vector3,
 } from 'three';
@@ -36,7 +34,7 @@ export class Tunnel {
 
     const tubeMaterial = new MeshLambertMaterial({
       color: 0xde527f,
-      side: DoubleSide,
+      side: BackSide,
       map: tubeTexture,
       transparent: true, // Включаем прозрачность
       opacity: 1,
@@ -51,44 +49,33 @@ export class Tunnel {
     this.mesh.matrixAutoUpdate = false;
     this.mesh.updateMatrix();
 
-    // плоскость с дыркой
-    // const planeWithHole = this.createPlaneWithHole();
-
-    //planeWithHole.position.set(0, -1, 55);
     this.group.add(this.mesh);
+
+    this.addArch();
   }
 
-  public createPlaneWithHole(): Mesh {
-    // Размеры плоскости
-    const width = 12;
-    const height = 5;
-    const holeRadius = 1.82;
+  private addArch() {
+    // Создаем геометрию кольца
+    // Параметры: внутренний радиус, внешний радиус, сегменты по окружности, сегменты по радиусу
+    const ringGeometry = new RingGeometry(1.99, 2.01, 8, 1);
 
-    // Создаем внешний контур (плоскость)
-    const shape = new Shape();
-    shape.moveTo(-width / 2, -height / 2);
-    shape.lineTo(width / 2, -height / 2);
-    shape.lineTo(width / 4, height / 2);
-    shape.lineTo(-width / 4, height / 2);
-    shape.closePath();
-
-    // Создаем внутренний контур (дырку)
-    const holePath = new Path();
-    holePath.absarc(0, -0.1, holeRadius, 0, Math.PI * 2, true);
-    shape.holes.push(holePath);
-
-    // Создаем геометрию из формы
-    const geometry = new ShapeGeometry(shape);
-
-    const planeTexture = TextureLoad.loadTexture('/img/grid.png', 1, 1);
-
-    const planeMaterial = new MeshLambertMaterial({
-      color: 0x00ff00,
+    // Создаем материал для кольца
+    const ringMaterial = new MeshLambertMaterial({
+      color: 0xde527f,
       side: FrontSide,
-      map: planeTexture,
+      emissive: 0xde527f,
+      emissiveIntensity: 0.5,
     });
 
-    return new Mesh(geometry, planeMaterial);
+    // Создаем меш кольца
+    const ringMesh1 = new Mesh(ringGeometry, ringMaterial);
+    ringMesh1.position.set(0, -1, 57);
+
+    const ringMesh2 = new Mesh(ringGeometry, ringMaterial);
+    ringMesh2.position.set(4, -1, 20);
+
+    // Добавляем кольцо в группу
+    this.group?.add(ringMesh1, ringMesh2);
   }
 
   public getGroup(): Group {

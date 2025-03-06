@@ -18,28 +18,7 @@ import { TerrainPlane } from '@/components/Canvas/Mountains';
 // @ts-ignore
 import GUI from 'three/examples/jsm/libs/lil-gui.module.min';
 import gsap from 'gsap';
-
-// [x, y, z, duration, delay]
-const cameraPosition = [
-  [0, 0.5, 80, 0.5, 0], // 0
-  [0, 0.2, 65, 0.5, 0.2], // 1
-  [0, -0.345, 48, 0.5, 0.2], // 2
-  [4.32, -0.6, 40, 0.5, 0.2], // 3
-  [0, -0.56, 30, 0.7, 0], // 4
-  [4.8, -0.63, 18.5, 0.5, 0], // 5
-  [1.35, -0.3, 13.74, 0.5, 0], // 6
-];
-
-// [rotate Y, duration, delay]
-const cameraRotation = [
-  [0, 0.5, 0], // 0
-  [0, 0.5, 0], // 1
-  [-0.64, 0.5, 0.2], // 2
-  [0.063, 0.5, 0.2], // 3
-  [-0.79, 0.5, 0.2], // 4
-  [0.06, 0.5, 0], // 5
-  [-0.05, 0.5, 0], // 6
-];
+import { cameraPosition, cameraRotation } from '@/components/Canvas/constants';
 
 export class CanvasHandler {
   private readonly renderer: WebGLRenderer;
@@ -51,6 +30,8 @@ export class CanvasHandler {
   private readonly frameHandler: FrameHandler;
 
   private readonly resizeHandler: () => void;
+
+  private currentSlideIndex: number = 0;
 
   /// elements
 
@@ -129,11 +110,27 @@ export class CanvasHandler {
 
     this.scene.add(
       this.roadPlane.getGroup(),
-      this.car.getMesh(),
       this.tunnel.getGroup(),
       this.nightSky.getGroup(),
       this.terrainPlane.getGroup(),
     );
+
+    const checkModelLoaded = setInterval(() => {
+      const carMesh = this.car?.getMesh('car');
+      const policeMesh = this.car?.getMesh('police');
+
+      if (carMesh) {
+        this.scene.add(carMesh);
+      }
+
+      if (policeMesh) {
+        this.scene.add(policeMesh);
+      }
+
+      if (carMesh && policeMesh) {
+        clearInterval(checkModelLoaded);
+      }
+    }, 100);
   }
 
   public updateSlide(slideIndex: number) {
@@ -142,33 +139,37 @@ export class CanvasHandler {
       return;
     }
 
+    const direction = slideIndex > this.currentSlideIndex ? 'next' : 'prev';
+    this.currentSlideIndex = slideIndex;
+    const multiplier = direction === 'next' ? 1 : 0.3;
+
     gsap.to(this.camera.position, {
       x: cameraPosition[slideIndex][0],
       y: cameraPosition[slideIndex][1],
       z: cameraPosition[slideIndex][2],
-      duration: cameraPosition[slideIndex][3],
-      delay: cameraPosition[slideIndex][4],
-      ease: 'linear',
+      duration: cameraPosition[slideIndex][3] * multiplier,
+      delay: cameraPosition[slideIndex][4] * multiplier,
+      ease: cameraPosition[slideIndex][5],
       onComplete: () => {},
     });
 
     gsap.to(this.camera.rotation, {
       y: cameraRotation[slideIndex][0],
-      duration: cameraRotation[slideIndex][1],
-      delay: cameraRotation[slideIndex][2],
-      ease: 'linear',
+      duration: cameraRotation[slideIndex][1] * multiplier,
+      delay: cameraRotation[slideIndex][2] * multiplier,
+      ease: cameraRotation[slideIndex][3],
       onComplete: () => {},
     });
+
+    if (this.car) {
+      this.car.moveTo(slideIndex, multiplier);
+    }
   }
 
   private handleFrame(rawDelta: number) {
     const delta = Math.min(rawDelta, 2);
 
     if (document.hidden) return;
-
-    if (this.car) {
-      this.car.update(delta);
-    }
 
     // Рендерим сцену
     this.renderer.render(this.scene, this.camera);

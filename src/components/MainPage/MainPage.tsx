@@ -55,24 +55,29 @@ export const MainPage = () => {
       >
         <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>
           <div>
+            0
+            {/*
             <h1>
               Дарья Владыко,
               <br /> Креативный фронтенд
             </h1>
+            */}
           </div>
         </SwiperSlide>
         <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>
           <div>
+            1
+            {/*
             <p>
               10 лет в разработке. Мои проекты получили награды Red Dot, Awwwards, Tagline,
               Orpetron, Золотой сайт, Рейтинг рунета.
-            </p>
+            </p>*/}
           </div>
         </SwiperSlide>
-        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>кейс 1</SwiperSlide>
-        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>кейс 2</SwiperSlide>
-        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>кейс 3</SwiperSlide>
-        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>выход</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>2</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>3</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>4</SwiperSlide>
+        <SwiperSlide className={clsx(styles.slide, styles.slide__1)}>5</SwiperSlide>
       </Swiper>
     </main>
   );

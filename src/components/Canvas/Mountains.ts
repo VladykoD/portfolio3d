@@ -17,13 +17,13 @@ export class TerrainPlane {
   constructor() {
     this.group = new Group();
 
-    const mountain1 = this.createMountain(6, 23, 8, 20);
+    const mountain1 = this.createMountain(6, 22, 8, 20);
     mountain1.rotateX(-Math.PI / 2);
-    mountain1.position.set(-4.56, -2.05, 64);
+    mountain1.position.set(-4.56, -2.05, 67.5);
 
-    const mountain2 = this.createMountain(6, 23, 8, 20);
+    const mountain2 = this.createMountain(6, 22, 8, 20);
     mountain2.rotateX(-Math.PI / 2);
-    mountain2.position.set(4.56, -2.05, 64);
+    mountain2.position.set(4.56, -2.05, 66.5);
 
     this.group.add(mountain1, mountain2);
   }

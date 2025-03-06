@@ -16,6 +16,7 @@
     "effector": "^23.3.0",
     "effector-react": "^23.3.0",
     "gsap": "^3.12.7",
+    "lil-gui": "^0.20.0",
     "next": "14.0.0",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
