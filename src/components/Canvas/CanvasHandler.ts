@@ -75,7 +75,7 @@ export class CanvasHandler {
     window.addEventListener('resize', this.resizeHandler);
 
     // анимация
-    this.frameHandler = new FrameHandler((d) => this.handleFrame(d));
+    this.frameHandler = new FrameHandler(() => this.handleFrame());
     this.frameHandler.start();
   }
 
@@ -164,8 +164,8 @@ export class CanvasHandler {
     }
   }
 
-  private handleFrame(rawDelta: number) {
-    const delta = Math.min(rawDelta, 2);
+  private handleFrame() {
+    //const delta = Math.min(rawDelta, 2);
 
     if (document.hidden) return;
 
